@@ -3,10 +3,13 @@ import axios from 'axios';
 import Button from '../../components/button/Button';
 import { useDispatch } from 'react-redux';
 import { loginAsync } from '../../redux/Auth/authSlice';
+import { Link, Navigate } from 'react-router-dom';
+import isAdmin from '../../utils/auth'
+const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
 
 // Create an Axios instance with a base URL
 const axiosInstance = axios.create({
-    baseURL: 'http://localHost:3003', // Replace with your API base URL
+    baseURL:BaseURL , // Replace with your API base URL
 });
 
 function LoginContainer() {
@@ -29,10 +32,22 @@ const dispatch =useDispatch()
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await dispatch(loginAsync({ 
-            email: formData.email,
-            password: formData.password
-          }));
+try {
+    await dispatch(loginAsync({ 
+        email: formData.email,
+        password: formData.password
+      }));
+      if (isAdmin()) {
+        // Redirect to dashboard if user is admin
+        navigate('/dashboard');
+    } else {
+        // Redirect to homepage if user is not admin
+        navigate('/');
+    } 
+    
+} catch (error) {
+    
+}
     };
 
     return (
@@ -77,7 +92,10 @@ const dispatch =useDispatch()
   Login
 </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500" style={{ color: '#F04520' }}>Sign up</a>
+                                Don’t have an account yet?  
+                                <Link to="/signup">
+                                <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500" style={{ color: '#F04520' }}>Sign up</a>
+                                </Link>
                             </p>
                         </form>
                     </div>

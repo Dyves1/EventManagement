@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import EventModal from '../../components/EventModel';
-const BASE_URL = 'http://localHost:3003';
+
+const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
+
 
 function EventManagement() {
     const [events, setEvents] = useState([]);
@@ -19,7 +21,7 @@ function EventManagement() {
   
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/events`); // Concatenate with the base URL
+        const response = await axios.get(`${BaseURL}/events`); // Concatenate with the base URL
         setEvents(response.data.data); // Assuming your API returns data in a 'data' property
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -43,7 +45,7 @@ function EventManagement() {
       };
       const handleDelete = async () => {
         try {
-            await axios.delete(`${BASE_URL}/events/${selectedEventId}`);
+            await axios.delete(`${BaseURL}/events/${selectedEventId}`);
             fetchEvents(); // Fetch events again to reflect the changes
             setSelectedEventId(null); // Reset selectedEventId after deletion
             setIsConfirmationOpen(false); // Close the confirmation modal after deletion

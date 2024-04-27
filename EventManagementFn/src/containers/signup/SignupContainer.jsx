@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { registerAsync } from '../../redux/Auth/authSlice';
 
 // Create an Axios instance with a base URL
-const axiosInstance = axios.create({
-    baseURL: 'http://localHost:3003', // Replace with your API base URL
-});
+
 
 function SignupContainer() {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         fullname: '',
         email: '',
         password: '',
         confirmPassword: '',
     });
-
+const {fullname, email,password,confirmPassword}=formData
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
 
@@ -28,28 +30,45 @@ function SignupContainer() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        try {
+            // Check if passwords match
+            if (password !== confirmPassword) {
+              throw new Error("Passwords don't match");
+            }
+            // Dispatch registerAsync action
+            await dispatch(registerAsync({ email, password }));
+            // Reset form data
+            setFormData({
+              fullName: '',
+              email: '',
+              password: '',
+              confirmPassword: '',
+            });
+          } catch (error) {
+            console.error(error);
+            // Handle error (e.g., show error message to the user)
+          }
         // Check for empty fields
     
-        if (formData.password !== formData.confirmPassword) {
-            // Handle password mismatch error
-            setToastMessage('Passwords do not match');
-            setToastType('danger');
-            return;
-        }
+        // if (formData.password !== formData.confirmPassword) {
+        //     // Handle password mismatch error
+        //     setToastMessage('Passwords do not match');
+        //     setToastType('danger');
+        //     return;
+        // }
     
-        try {
-            const response = await axiosInstance.post('/signup', formData);
-            // Handle successful signup
-            setToastMessage(response.data.message);
-            setToastType('success');
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle signup error
-            setToastMessage(error.message);
-            setToastType('danger');
-        }
+        // try {
+        //     const response = await axiosInstance.post('/signup', formData);
+        //     // Handle successful signup
+        //     setToastMessage(response.data.message);
+        //     setToastType('success');
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.error('Error:', error);
+        //     // Handle signup error
+        //     setToastMessage(error.message);
+        //     setToastType('danger');
+        // }
     };
     
 
@@ -130,7 +149,10 @@ function SignupContainer() {
 </button>
 
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => {console.log('hhhh')}} style={{ color: '#F04520' }}>Login here</a>
+                                Already have an account?  
+                                <Link to="/login">
+                                <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => {console.log('hhhh')}} style={{ color: '#F04520' }}>Login here</a>
+                                </Link>
                             </p>
                         </form>
                     </div>

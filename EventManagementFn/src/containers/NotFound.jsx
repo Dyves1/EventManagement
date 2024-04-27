@@ -1,9 +1,14 @@
+import NotFound from "../assets/image/NotFound.svg";
+import Navbar from "../components/navbar/Navbar";
 const Notfound = () => {
     return (
-      <main className='w-full flex flex-col justify-center items-center mt-[10%] mb-[15%]'>
+<div>
+  <Navbar/>
+<main className='w-full flex flex-col justify-center items-center mt-[10%] mb-[15%]'>
         <h1 className='text-xl'> Whoops, looks like you got lost... </h1>
-        <img className='mt-[2rem]' src="" alt='#' />
+        <img className='mt-[2rem]' src={NotFound} alt='#' />
       </main>
+</div>
     );
   };
   

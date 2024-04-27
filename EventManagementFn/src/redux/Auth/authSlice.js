@@ -2,8 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, register } from '../Auth/authService';
 import { useNavigate } from 'react-router-dom';
 
+const token = localStorage.getItem('token');
+const initialState ={
+  isAuthenticated:!!token,
+  user:token,
+  status:'idle',
+  error:null
+};
+
 export const loginAsync = createAsyncThunk(
-  '/login',
+  'Auth/login',
   async ({ email, password }, thunkAPI) => {
     console.log(email, password)
     try {
@@ -16,7 +24,7 @@ export const loginAsync = createAsyncThunk(
 );
 
 export const registerAsync = createAsyncThunk(
-  '/signup',
+  'Auth/signup',
   async ({ fullName, email, password }, thunkAPI) => {
     try {
       const response = await register(fullName, email, password);
@@ -29,19 +37,13 @@ export const registerAsync = createAsyncThunk(
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    isAuthenticated: false,
-    user: null,
-    status: 'idle',
-    error: null
-  },
+  initialState,
   reducers: {
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
       localStorage.removeItem('token');
-      const navigate = useNavigate();
-      navigate('/');
+
     }
   },
   extraReducers: (builder) => {

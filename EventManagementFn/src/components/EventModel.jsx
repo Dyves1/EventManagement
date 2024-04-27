@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
 
-const BASE_URL = 'http://localhost:3003';
+
 
 const EventModal = ({ onClose, mode , eventId}) => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
 
   const fetchEventData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/events/${eventId}`);
+      const response = await axios.get(`${BaseURL}/events/${eventId}`);
       const eventData = response.data;
             // Populate form data with existing event data
       setFormData({
@@ -45,7 +46,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
     e.preventDefault();
     if (mode === 'create') {
       try {
-        await axios.post(`${BASE_URL}/events`, formData);
+        await axios.post(`${BaseURL}/events`, formData);
         setMessage('Event created successfully!');
         setShowMessage(true);
         
@@ -63,7 +64,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
 
       try {
         // Assuming you have event ID available for editing
-        await axios.put(`${BASE_URL}/events/${event.id}`, formData);
+        await axios.put(`${BaseURL}/events/${event.id}`, formData);
         setMessage(data.message);
         setShowMessage(true);
         onClose();
@@ -182,8 +183,8 @@ const EventModal = ({ onClose, mode , eventId}) => {
               placeholder="Enter number of tickets available"
              
             />
-                                  <div class="col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Event Description</label>
+                                  <div className="col-span-2">
+                        <label for="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Event Description</label>
                         <textarea 
                              type="text"
                              

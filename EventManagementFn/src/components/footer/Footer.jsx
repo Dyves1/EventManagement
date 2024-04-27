@@ -1,6 +1,5 @@
 import React from "react";
-// import footerLogo from "../../assets/logo.png";
-// import Banner from "../../assets/website/footer-pattern.jpg";
+import Logo from '../navbar/Logo.png'
 import {
   FaFacebook,
   FaInstagram,
@@ -38,7 +37,7 @@ const Footer = () => {
           {/* company details */}
           <div className="py-8 px-4">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="" className="h-8" alt="#" />
+          <img src={Logo} className="h-8" alt="#" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black" style={{color:"#F04520"}}>EVENTUS</span>
         </a>
             <p>
@@ -113,8 +112,8 @@ const Footer = () => {
           
         </div>
         <div className="pb-3">
-        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="#" class="hover:underline">Eventus</a>. All Rights Reserved.</span>
+        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="#" className="hover:underline">Eventus</a>. All Rights Reserved.</span>
         </div>
       </div>
       
