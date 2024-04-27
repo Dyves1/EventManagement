@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import bodyParser from "body-parser";
 
 
-import allRoutes from "./src/Routes/allRoutes.js"
+import allRoutes from "./Routes/allRoutes.js"
 
 mongoose.set('strictQuery', false)
 

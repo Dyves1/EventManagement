@@ -11,6 +11,7 @@ const getCookie = (req) => {
     const cookie = req.headers.cookie
       ? req.headers.cookie
       : req.headers.authorization;
+      
     if (!cookie) {
       return null;
     }
