@@ -27,7 +27,7 @@ app.get("/", (req, res)=> {
   `)
 })
 
-// app.use("/", allRoutes)
+app.use("/", allRoutes)
 
 // define some variables
 const port = process.env.PORT;
@@ -35,8 +35,7 @@ const dataBase=process.env.MONGODB_URL
 
 // database some variables
 const con =()=> mongoose.connect(dataBase,{
-    useNewUrlParser:true,
-    useUnifiedTopology:true,
+
     
   });
 
