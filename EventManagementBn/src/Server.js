@@ -27,7 +27,7 @@ app.get("/", (req, res)=> {
   `)
 })
 
-app.use("/", allRoutes)
+// app.use("/", allRoutes)
 
 // define some variables
 const port = process.env.PORT;
