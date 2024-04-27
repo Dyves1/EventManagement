@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { getCookie, getToken } from '../UTILS/cookies.js';
 
 // checkIsLoggedIn.js
 const isAuthenticated = (req, res, next) => {
