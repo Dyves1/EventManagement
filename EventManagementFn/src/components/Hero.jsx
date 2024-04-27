@@ -5,7 +5,7 @@ import Navbar from '../components/navbar/Navbar';
 // Define your base URL
 const BASE_URL = 'http://localhost:3003';
 
-function EventContainer() {
+function Hero() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -24,11 +24,10 @@ function EventContainer() {
 
   return (
     <div>
-      <div className="container mx-auto pt-10 px-5 py-10 mt-10">
-      <Navbar />
-<h1 className='self-center text-2xl font-semibold whitespace-nowrap dark:text-black pb-5'>All Events </h1>
+      
+      <div className="container mx-auto px-5 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map(event => (
+          {events.map(event => (
             <div key={event._id} className="bg-white rounded-lg shadow-md p-6">
               <a href="#">
                 <img className="w-full mb-4 rounded-lg" src="/docs/images/products/apple-watch.png" alt="product image" />
@@ -67,4 +66,4 @@ function EventContainer() {
   );
 }
 
-export default EventContainer;
+export default Hero;

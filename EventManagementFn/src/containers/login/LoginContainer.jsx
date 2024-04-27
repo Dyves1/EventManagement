@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '../../components/button/Button';
+import { useDispatch } from 'react-redux';
+import { loginAsync } from '../../redux/Auth/authSlice';
 
 // Create an Axios instance with a base URL
 const axiosInstance = axios.create({
@@ -12,7 +14,7 @@ function LoginContainer() {
         email: '',
         password: '',
     });
-
+const dispatch =useDispatch()
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
 
@@ -27,18 +29,10 @@ function LoginContainer() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axiosInstance.post('/login', formData);
-            // Handle successful login
-            setToastMessage(response.data.message);
-            setToastType('success');
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle login error
-            setToastMessage(error.message);
-            setToastType('danger');
-        }
+        await dispatch(loginAsync({ 
+            email: formData.email,
+            password: formData.password
+          }));
     };
 
     return (

@@ -1,6 +1,6 @@
-import React from 'react'
 import Navbar from '../components/navbar/Navbar'
 import Footer from '../components/footer/Footer'
+import Hero from '../components/Hero'
 
 function HomeContainer() {
   return (
@@ -24,6 +24,7 @@ function HomeContainer() {
         <button className='bg-[#F04520] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Get Started</button>
       </div>
     </div>
+    <Hero/>
     <Footer/>
 
     </div>
