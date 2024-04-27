@@ -31,7 +31,6 @@ app.use("/", allRoutes)
 
 // define some variables
 const port = process.env.PORT;
-const host = process.env.HOST;
 const dataBase=process.env.MONGODB_URL
 
 // database some variables
@@ -46,7 +45,7 @@ const startServer = ()=>app.listen(port);
 
 Promise.all([con(), startServer()])
  .then(()=>{
-  console.log(`MongoDB connected and server listening at http://${host}:${port}`);
+  console.log(`MongoDB connected and server Is Running`);
  })
  .catch((err) =>console.log(err))
 
