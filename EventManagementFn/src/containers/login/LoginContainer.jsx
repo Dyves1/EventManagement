@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Button from '../../components/button/Button';
 import { useDispatch } from 'react-redux';
 import { loginAsync } from '../../redux/Auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import isAdmin from '../../utils/auth'
 import { decodeToken } from 'react-jwt';
 const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
 
@@ -42,6 +40,7 @@ const navigate = useNavigate()
             }));
             setToastMessage('Login successful');
             setToastType('success');
+            
         } catch (error) {
             console.error('Login error:', error);
             setToastMessage('Login failed. Please try again.');
@@ -57,7 +56,7 @@ const navigate = useNavigate()
             if(isAdmin==true){
                 navigate('/dashboard')
             }else(
-                navigate('/')
+                navigate('/events')
             )
             
         }

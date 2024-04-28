@@ -61,15 +61,15 @@ const BookingContainer = () => {
 //   }
 
   // Render message when there are no bookings
-  if (bookedEvents.length === 0) {
-    return <div className="bg-gray-100 min-h-screen flex items-center justify-center">No bookings found.</div>;
-  }
+  // if (bookedEvents.length === 0) {
+  //   <Navbar/>
+  //   return <div className="bg-gray-100 min-h-screen flex items-center justify-center">No bookings found.</div>;
+  // }
 return (
     <div className="bg-gray-100 min-h-screen py-8">
       <Navbar />
       {bookedEvents.length ===0 ? (
-    //  <div className="bg-gray-100 min-h-screen flex items-center justify-center">No bookings found.</div>;
-<h1 className="bg-gray-100  flex items-center justify-center">No bookings found.</h1>
+     <div className="bg-gray-100 min-h-screen flex items-center justify-center">No bookings found.</div>
       ):(
         <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-semibold mb-4">My Booked Events</h2>

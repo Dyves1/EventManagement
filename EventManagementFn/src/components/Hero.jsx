@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EventPhoto from "../assets/image/eventPhoto.jpg";
 import dotenv from 'dotenv'
+import { Link } from 'react-router-dom'
 
 // Define your base URL
 const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
@@ -10,6 +11,7 @@ function Hero() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     // Fetch events when component mounts
     fetchEvents();
@@ -26,6 +28,7 @@ function Hero() {
       setLoading(false);
     }
   };
+
   
 
   return (
@@ -62,12 +65,15 @@ function Hero() {
               </div>
               <div className="flex items-center justify-between mt-4">
                 <a href="#" className="text-blue-600 hover:underline">View Details</a>
-                <button
+<Link to='/events'>
+<button
+               
                   style={{ background: '#F04520' }}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg--700 dark:focus:ring--800"
                 >
                   BOOK NOW
                 </button>
+</Link>
               </div>
             </div>
           </div>

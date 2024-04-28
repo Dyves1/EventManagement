@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/navbar/Navbar';
 import EventPhoto from "../assets/image/eventPhoto.jpg";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Define your base URL
 
@@ -10,6 +10,7 @@ const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
 
 function EventContainer() {
   const { eventId } = useParams();
+  const navigate = useNavigate()
   const [events, setEvents] = useState([]);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [numTickets, setNumTickets] = useState(1);
@@ -29,26 +30,31 @@ function EventContainer() {
       console.error('Error fetching events:', error);
     }
   };
-
+  const token = localStorage.getItem('token');
   const handleBooking = (eventId) => {
-    setIsBookingModalOpen(true);
-    setSelectedEventId(eventId);
+if(token){
+  setIsBookingModalOpen(true);
+  setSelectedEventId(eventId);
+}else{
+  navigate('/login')
+}
   };
 
   const handleSubmitBooking =async () => {
 
-    const token = localStorage.getItem('token');
+
     
 
     try {
       const response = await fetch(`${BaseURL}/booking/${selectedEventId}`, {
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          tickets: numTickets,
+          numTickets,
         }),
       });
 

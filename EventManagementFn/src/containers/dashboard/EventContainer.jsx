@@ -52,7 +52,8 @@ function EventManagement() {
             setSelectedEventId(null); // Reset selectedEventId after deletion
             setIsConfirmationOpen(false);
             setToastMessage('Event delete successful');
-            setToastType('success'); // Close the confirmation modal after deletion
+            setToastType('success');
+            window.location.reload(); // Close the confirmation modal after deletion
         } catch (error) {
             console.error('Error deleting event:', error);
             setToastMessage('Delete Event failed. Please try again.');

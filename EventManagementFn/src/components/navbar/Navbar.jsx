@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../redux/Auth/authSlice';
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
 
@@ -12,7 +14,17 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
   const handleLogout =()=>{
-    dispatch(logout())
+
+try {
+  dispatch(logout())
+  setToastMessage('logout successful');
+  setToastType('success');
+  window.location.reload();
+} catch (error) {
+  console.error('Logout error:', error);
+  setToastMessage('Logout failed. Please try again.');
+  setToastType('error');
+}
   }
 
   return (
@@ -48,21 +60,28 @@ function Navbar() {
         </div>
         <div className={`w-full md:block md:w-auto ${isOpen ? '' : 'hidden'}`} id="navbar-sticky">
           <ul style={{background:'white'}} className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-white-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-white-900 dark:border-white-700">
-            <li>
-            <a href="#" className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">Home</a>
-
+          <li>
+              <Link to ='/' className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">Home</Link>
             </li>
             <li>
               <a href="#" className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">About</a>
             </li>
             <li>
-              <a href="#" className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">My Bookings</a>
+              <Link to ='/booking' className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">My Bookings</Link>
             </li>
             <li>
               <a href="#" className="block py-2 px-3 text-black-900 rounded hover:bg-white-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-white-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-white-700">Contact</a>
             </li>
           </ul>
         </div>
+        {toastMessage && (
+        <div className="bg-green-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+
+                    <div className={`bg-${toastType === 'success' ? 'green' : 'red'}-500 text-white px-6 py-3 rounded-lg shadow-md`}>
+                        {toastMessage}
+                    </div>
+                </div>
+            )}  
       </div>
     </nav>
   );
