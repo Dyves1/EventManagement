@@ -1,6 +1,6 @@
 # Event Management Platform
 
-Welcome to the Event Management Platform. This platform will enable users to browse upcoming events, book tickets, and manage their bookings, while administrators will have access to an admin dashboard for event management.
+Welcome to the Event Management Platform [EVENTUS](https://event-management-seven-beta.vercel.app/). This platform will enable users to browse upcoming events, book tickets, and manage their bookings, while administrators will have access to an admin dashboard for event management.
 
 ## Project Features
 
@@ -21,8 +21,10 @@ Welcome to the Event Management Platform. This platform will enable users to bro
 - Allow admins to manage events, including creating new events, editing event details, and deleting events if necessary.
 - Provide functionality for admins to view all bookings and manage them (e.g., cancel bookings, view attendee details).
 
-
-
+The hosted version https://event-management-seven-beta.vercel.app/
+To access the Administrator Dashboard here are the credentials:
+- Email: ishimwedidieryves01@gmail.com
+- Password: Test123
 
 
 ## Getting Started
