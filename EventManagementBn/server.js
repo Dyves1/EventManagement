@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 
-// import allRoutes from "./Routes/allRoutes.js"
+import allRoutes from "./src/Routes/allRoutes.js"
 
 mongoose.set('strictQuery', false)
 
@@ -25,7 +25,7 @@ app.get("/", (req, res)=> {
   `)
 })
 
-// app.use("/", allRoutes)
+app.use("/", allRoutes)
 
 // define some variables
 const port = process.env.PORT;
