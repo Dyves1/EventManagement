@@ -26,6 +26,7 @@ function Hero() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '../../components/button/Button';
 import { useDispatch } from 'react-redux';
 import { loginAsync } from '../../redux/Auth/authSlice';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import isAdmin from '../../utils/auth'
+import { decodeToken } from 'react-jwt';
 const BaseURL = import.meta.env.VITE_REACT_BASE_URL;
 
 // Create an Axios instance with a base URL
@@ -18,6 +19,7 @@ function LoginContainer() {
         password: '',
     });
 const dispatch =useDispatch()
+const navigate = useNavigate()
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
 
@@ -28,27 +30,41 @@ const dispatch =useDispatch()
             [name]: value,
         });
     };
+    const token = localStorage.getItem('token');
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            await dispatch(loginAsync({ 
+                email: formData.email,
+                password: formData.password,
+            }));
+            setToastMessage('Login successful');
+            setToastType('success');
+        } catch (error) {
+            console.error('Login error:', error);
+            setToastMessage('Login failed. Please try again.');
+            setToastType('error');
+        }
 
-try {
-    await dispatch(loginAsync({ 
-        email: formData.email,
-        password: formData.password
-      }));
-      if (isAdmin()) {
-        // Redirect to dashboard if user is admin
-        navigate('/dashboard');
-    } else {
-        // Redirect to homepage if user is not admin
-        navigate('/');
-    } 
-    
-} catch (error) {
-    
-}
     };
+    useEffect(() => {
+        if (token !== null) {
+            const tokenDecoded = decodeToken(token);
+            const {userId,isAdmin}=tokenDecoded
+
+            if(isAdmin==true){
+                navigate('/dashboard')
+            }else(
+                navigate('/')
+            )
+            
+        }
+        else{
+            navigate('/login')
+        }
+    }, [dispatch,  token]);
 
     return (
         <section className="bg-white-50 dark:bg-white-900">
@@ -93,8 +109,8 @@ try {
 </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet?  
-                                <Link to="/signup">
-                                <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500" style={{ color: '#F04520' }}>Sign up</a>
+                                <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500" style={{ color: '#F04520' }}>
+                                Sign up
                                 </Link>
                             </p>
                         </form>
@@ -102,14 +118,11 @@ try {
                 </div>
             </div>
             {toastMessage && (
-                <div id="toast" className={`flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 ${toastType === 'success' ? 'visible' : 'invisible'}`} role="alert">
-                    <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
-                        </svg>
-                        <span className="sr-only">Check icon</span>
+        <div className="bg-green-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+
+                    <div className={`bg-${toastType === 'success' ? 'green' : 'red'}-500 text-white px-6 py-3 rounded-lg shadow-md`}>
+                        {toastMessage}
                     </div>
-                    <div className="ms-3 text-sm font-normal">{toastMessage}</div>
                 </div>
             )}
         </section>

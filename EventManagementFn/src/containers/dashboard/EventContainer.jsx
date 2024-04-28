@@ -11,6 +11,8 @@ function EventManagement() {
     const [modalMode, setModalMode] = useState('create');
     const [selectedEventId, setSelectedEventId] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('');
 
 
     useEffect(() => {
@@ -48,9 +50,14 @@ function EventManagement() {
             await axios.delete(`${BaseURL}/events/${selectedEventId}`);
             fetchEvents(); // Fetch events again to reflect the changes
             setSelectedEventId(null); // Reset selectedEventId after deletion
-            setIsConfirmationOpen(false); // Close the confirmation modal after deletion
+            setIsConfirmationOpen(false);
+            setToastMessage('Event delete successful');
+            setToastType('success'); // Close the confirmation modal after deletion
         } catch (error) {
             console.error('Error deleting event:', error);
+            setToastMessage('Delete Event failed. Please try again.');
+
+            setToastType('error');
         }
     };
     const confirmDelete = (eventId) => {
@@ -145,10 +152,18 @@ Create Event
                                 Delete
                             </button>
                         </div>
+                        
                     </div>
                 </div>
             )}
-            
+               {toastMessage && (
+        <div className="bg-green-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+
+                    <div className={`bg-${toastType === 'success' ? 'green' : 'red'}-500 text-white px-6 py-3 rounded-lg shadow-md`}>
+                        {toastMessage}
+                    </div>
+                </div>
+            )}         
 
     </div>
   )

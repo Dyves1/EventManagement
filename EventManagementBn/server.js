@@ -10,9 +10,9 @@ mongoose.set('strictQuery', false)
 
 // configuring dotenv
 dotenv.config();
-
 // create server instance
 const app = express();
+app.use(express.json());
 
 // use of cors and body parse
 app.use(cors({origin:'*'}))

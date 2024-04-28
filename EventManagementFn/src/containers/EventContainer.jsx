@@ -14,7 +14,7 @@ function EventContainer() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [numTickets, setNumTickets] = useState(1);
   const [selectedEventId, setSelectedEventId] = useState(null);
-
+  const [bookingStatus, setBookingStatus] = useState(null); 
 
   useEffect(() => {
     // Fetch events when component mounts
@@ -35,31 +35,34 @@ function EventContainer() {
     setSelectedEventId(eventId);
   };
 
-  const handleSubmitBooking = () => {
+  const handleSubmitBooking =async () => {
 
     const token = localStorage.getItem('token');
     
 
-  
-    fetch(`${BaseURL}/booking/${selectedEventId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        tickets: numTickets,
-      }),
-    })
-      .then(response => {
-        console.log('Booking successful:', response);
-        setIsBookingModalOpen(false);
-      })
-      console.log(tickets)
-
-      .catch(error => {
-        console.error('Error booking:', error.message);
+    try {
+      const response = await fetch(`${BaseURL}/booking/${selectedEventId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          tickets: numTickets,
+        }),
       });
+
+      if (response.ok) {
+        setBookingStatus('success');
+      } else {
+        setBookingStatus('error');
+      }
+
+      setIsBookingModalOpen(false);
+    } catch (error) {
+      console.error('Error booking:', error.message);
+      setBookingStatus('error');
+    }
 
   };
   
@@ -108,7 +111,20 @@ function EventContainer() {
             </div>
           ))}
         </div>
+
       </div>
+
+      {bookingStatus === 'success' && (
+        <div className="bg-green-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+          Event booked successfully!
+        </div>
+      )}
+
+      {bookingStatus === 'error' && (
+        <div className="bg-red-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+          Error booking event. Please try again later.
+        </div>
+      )}
 
       {isBookingModalOpen && (
           <div className="fixed z-10 inset-0 overflow-y-auto">

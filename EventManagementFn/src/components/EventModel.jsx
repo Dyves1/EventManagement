@@ -13,7 +13,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
     description:'',
     tickets: '',
   });
-
+  const [toastType, setToastType] = useState('');
   const [message, setMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   useEffect(() => {
@@ -49,7 +49,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
         await axios.post(`${BaseURL}/events`, formData);
         setMessage('Event created successfully!');
         setShowMessage(true);
-        
+        setToastType('success');
         setTimeout(() => {
             setShowMessage(false);
           onClose();
@@ -59,6 +59,7 @@ const EventModal = ({ onClose, mode , eventId}) => {
         setMessage('Error creating event.');
         setShowMessage(true);
         console.error('Error creating event:', error);
+        setToastType('error');
       }
     } else if (mode === 'edit') {
 
@@ -67,11 +68,13 @@ const EventModal = ({ onClose, mode , eventId}) => {
         await axios.put(`${BaseURL}/events/${event.id}`, formData);
         setMessage(data.message);
         setShowMessage(true);
+        setToastType('success');
         onClose();
       } catch (error) {
         setMessage('Error editing event.');
         setShowMessage(true);
         console.error('Error editing event:', error);
+        setToastType('error');
       }
     }
   };
@@ -222,14 +225,12 @@ const EventModal = ({ onClose, mode , eventId}) => {
 
         {/* Popup message */}
         {showMessage && (
-          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-5 rounded-lg border">
-              <p>{message}</p>
-              <button onClick={handlePopupClose} className="mt-3 text-blue-700">
-                Close
-              </button>
-            </div>
-          </div>
+        <div className="bg-green-500 text-white py-3 text-center fixed bottom-0 left-0 right-0">
+
+        <div className={`bg-${toastType === 'success' ? 'green' : 'red'}-500 text-white px-6 py-3 rounded-lg shadow-md`}>
+            {message}
+        </div>
+    </div>
         )}
       </div>
     </div>
