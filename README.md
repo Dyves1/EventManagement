@@ -21,10 +21,11 @@ Welcome to the Event Management Platform [EVENTUS](https://event-management-seve
 - Allow admins to manage events, including creating new events, editing event details, and deleting events if necessary.
 - Provide functionality for admins to view all bookings and manage them (e.g., cancel bookings, view attendee details).
 
-The hosted version https://event-management-seven-beta.vercel.app/
+The hosted version https://event-management-seven-beta.vercel.app/ 
+
 To access the Administrator Dashboard here are the credentials:
-- Email: ishimwedidieryves01@gmail.com
-- Password: Test123
+- Email: `ishimwedidieryves01@gmail.com`
+- Password: `Test123`
 
 
 ## Getting Started
